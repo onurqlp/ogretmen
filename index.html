@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AYDA Öğretmenler Materyal Paneli</title>
+  <meta name="theme-color" content="#234078" />
+
+  <style>
+    :root {
+      --ayda: #234078;
+      --ayda-dark: #172b57;
+      --ayda-soft: #eef3ff;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #667085;
+      --border: #e3e8f3;
+      --success: #16a34a;
+      --warning: #f59e0b;
+      --shadow: 0 14px 35px rgba(35, 64, 120, 0.12);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(35,64,120,0.14), transparent 35%),
+        linear-gradient(180deg, #f7f9ff 0%, #f5f7fb 100%);
+      color: var(--text);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--ayda), var(--ayda-dark));
+      color: white;
+      border-radius: 30px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -100px;
+      top: -100px;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.09);
+      border-radius: 50%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.22);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px rgba(255,255,255,0.15);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 16px 0 0;
+      font-size: 17px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      background: white;
+      color: var(--ayda);
+      border: 1px solid rgba(255,255,255,0.28);
+      transition: 0.2s ease;
+    }
+
+    .hero-btn.secondary {
+      background: rgba(255,255,255,0.12);
+      color: white;
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.16);
+    }
+
+    .top-panel {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+    }
+
+    .search-card,
+    .notice-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(35,64,120,0.07);
+    }
+
+    .search-card label {
+      display: block;
+      font-weight: 800;
+      color: var(--ayda);
+      margin-bottom: 10px;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 52px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 0 16px;
+      font-size: 16px;
+      outline: none;
+      background: #fbfcff;
+    }
+
+    .search-input:focus {
+      border-color: var(--ayda);
+      box-shadow: 0 0 0 4px rgba(35,64,120,0.10);
+    }
+
+    .notice-card h3 {
+      margin: 0 0 8px;
+      color: var(--ayda);
+      font-size: 18px;
+    }
+
+    .notice-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14.5px;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--ayda-soft);
+      color: var(--ayda);
+      font-weight: 800;
+      font-size: 14px;
+      border: 1px solid #d9e4ff;
+    }
+
+    .menu {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      margin: 18px 0;
+      padding: 10px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      box-shadow: 0 8px 22px rgba(35,64,120,0.08);
+    }
+
+    .menu a {
+      white-space: nowrap;
+      padding: 11px 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      color: var(--ayda);
+      background: #f6f8ff;
+      border: 1px solid transparent;
+      font-size: 14px;
+    }
+
+    .menu a:hover {
+      background: var(--ayda);
+      color: white;
+    }
+
+    .section {
+      margin-top: 28px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: 25px;
+      color: var(--ayda);
+      letter-spacing: -0.4px;
+    }
+
+    .section small {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .link-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 132px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 8px 20px rgba(35,64,120,0.06);
+      transition: 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 6px;
+      height: 100%;
+      background: var(--ayda);
+      opacity: 0.9;
+    }
+
+    .link-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 34px rgba(35,64,120,0.13);
+      border-color: #cbd8f5;
+    }
+
+    .card-title {
+      font-weight: 900;
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.3;
+      padding-left: 4px;
+    }
+
+    .card-sub {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.4;
+      padding-left: 4px;
+    }
+
+    .open-row {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-left: 4px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--ayda-soft);
+      color: var(--ayda);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .open-text {
+      color: var(--ayda);
+      font-weight: 900;
+      font-size: 13.5px;
+    }
+
+    .empty {
+      display: none;
+      margin: 26px 0;
+      background: #fff7ed;
+      color: #9a3412;
+      border: 1px solid #fed7aa;
+      padding: 16px;
+      border-radius: 16px;
+      font-weight: 800;
+    }
+
+    .footer {
+      margin-top: 38px;
+      padding: 22px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .footer strong {
+      color: var(--ayda);
+    }
+
+    .back-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--ayda);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: 0 12px 28px rgba(35,64,120,0.24);
+      z-index: 99;
+    }
+
+    @media (max-width: 920px) {
+      .top-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        width: min(100% - 22px, 1180px);
+        padding-top: 14px;
+      }
+
+      .hero {
+        padding: 24px 20px;
+        border-radius: 24px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-btn {
+        width: 100%;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .menu {
+        border-radius: 15px;
+      }
+
+      .link-card {
+        min-height: 120px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#top" class="back-top" aria-label="Yukarı çık">↑</a>
+
+  <main class="page" id="top">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          AYDA Dil Akademisi
+        </div>
+
+        <h1>Öğretmenler Materyal Paneli</h1>
+
+        <p>
+          AYDA öğretmenlerimiz için ders kitapları, sınav hazırlık dosyaları, ses kayıtları,
+          videolar ve ek dokümanlara hızlı erişim sayfası.
+        </p>
+
+        <div class="hero-actions">
+          <a class="hero-btn" href="#ana">Ana Klasörler</a>
+          <a class="hero-btn secondary" href="#sinav">Sınav Hazırlığı</a>
+          <a class="hero-btn secondary" href="#kitaplar">Ders Kitapları</a>
+          <a class="hero-btn secondary" href="#a1">A1</a>
+          <a class="hero-btn secondary" href="#a2">A2</a>
+          <a class="hero-btn secondary" href="#b1">B1</a>
+          <a class="hero-btn secondary" href="#b2">B2</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="top-panel">
+      <div class="search-card">
+        <label for="searchInput">Materyal ara</label>
+        <input
+          id="searchInput"
+          class="search-input"
+          type="search"
+          placeholder="Örn: TELC B2, Menschen A1.1, Sicher, Audio, Testtrainer..."
+        />
+      </div>
+
+      <div class="notice-card">
+        <h3>Gerekli sorular için iletişim</h3>
+        <p>
+          Linklerde erişim problemi, eksik dosya veya materyal yönlendirmesi gerektiğinde
+          öğretmenlerimiz aşağıdaki kişilerle iletişime geçebilir.
+        </p>
+
+        <div class="contact-row">
+          <a class="contact-btn" href="tel:+905372435123">Onur Hoca: 0537 243 51 23</a>
+          <a class="contact-btn" href="tel:+905419112503">Ayda: 0541 911 25 03</a>
+        </div>
+      </div>
+    </section>
+
+    <nav class="menu">
+      <a href="#ana">Ana Klasörler</a>
+      <a href="#sinav">Sınav Hazırlığı</a>
+      <a href="#kitaplar">Tüm Kitaplar</a>
+      <a href="#a1">A1</a>
+      <a href="#a2">A2</a>
+      <a href="#b1">B1</a>
+      <a href="#b2">B2</a>
+      <a href="#c1">C1 / Junior</a>
+    </nav>
+
+    <div id="emptyMessage" class="empty">
+      Aramanızla eşleşen materyal bulunamadı.
+    </div>
+
+    <!-- ANA KLASÖRLER -->
+    <section class="section" id="ana">
+      <div class="section-head">
+        <h2>Ana Klasörler</h2>
+        <small>Genel erişim ve temel doküman alanları</small>
+      </div>
+
+      <div class="grid">
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1f_hcAbJutST1FNYAaZkQoM9Cwi3v1cKe" data-title="Ana Klasör">
+          <div>
+            <div class="card-title">Ana Klasör</div>
+            <div class="card-sub">Tüm temel materyallerin ana erişim alanı.</div>
+          </div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1YSqtUPDzw9gFUEJXicX6FgbGvaYACYLE" data-title="Sınav Hazırlığı">
+          <div>
+            <div class="card-title">SINAV HAZIRLIĞI</div>
+            <div class="card-sub">TELC / Goethe / sınav odaklı hazırlık materyalleri.</div>
+          </div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/16DxOQnTA03wij4PkSNntJO2nkYOZkheV" data-title="Diğer Dökümanlar">
+          <div>
+            <div class="card-title">DİĞER DÖKÜMANLAR</div>
+            <div class="card-sub">Ek belge ve yardımcı dosyalar.</div>
+          </div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1c_Odc7WgrLFKUiSbFvyDf_MN13aCn27F" data-title="Menschen Sınav Alıştırmaları">
+          <div>
+            <div class="card-title">MENSCHEN SINAV ALIŞTIRMALARI</div>
+            <div class="card-sub">Menschen serisine bağlı sınav alıştırmaları.</div>
+          </div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- SINAV HAZIRLIĞI -->
+    <section class="section" id="sinav">
+      <div class="section-head">
+        <h2>Sınav Hazırlığı</h2>
+        <small>TELC, Goethe ve sınav odaklı özel materyaller</small>
+      </div>
+
+      <div class="grid">
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1YSqtUPDzw9gFUEJXicX6FgbGvaYACYLE" data-title="SINAV HAZIRLIĞI">
+          <div>
+            <div class="card-title">SINAV HAZIRLIĞI</div>
+            <div class="card-sub">Ana sınav hazırlığı klasörü.</div>
+          </div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1tJ_42hN-e8qX0Bln5GtLG8O12TEA__Ct" data-title="B1 SH Kurs Materyal">
+          <div>
+            <div class="card-title">B1 SH KURS MATERYAL</div>
+            <div class="card-sub">B1 sınav hazırlık kurs materyalleri.</div>
+          </div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/file/d/1FfgPhgtIVVMmbB9-CnjiCABbiBJ2dS_T/view?usp=drivesdk" data-title="B1 Sınav Hazırlığı Materyalleri">
+          <div>
+            <div class="card-title">B1 SINAV HAZIRLIĞI MATERYALLERİ</div>
+            <div class="card-sub">Kısayol olarak görünen B1 sınav hazırlığı dosyası.</div>
+          </div>
+          <div class="open-row"><span class="badge">Kısayol</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/file/d/1CtiXcNtqSBRqNQtpfUEy3hfPDmaAwL29/view?usp=drivesdk" data-title="B2 Goethe">
+          <div>
+            <div class="card-title">B2 Goethe</div>
+            <div class="card-sub">B2 Goethe sınav hazırlığı dosyası.</div>
+          </div>
+          <div class="open-row"><span class="badge">Kısayol</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/file/d/1tOSIMLsLD6uFYAyygb3wdPk0nBl0TQXY/view?usp=drivesdk" data-title="B2 TELC Alıştırma">
+          <div>
+            <div class="card-title">B2 TELC ALIŞTIRMA</div>
+            <div class="card-sub">B2 TELC alıştırma materyali.</div>
+          </div>
+          <div class="open-row"><span class="badge">Kısayol</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/file/d/1cwiBhbhJcizAbFCE1gUDD7Pl5maNNBL9/view?usp=drivesdk" data-title="A1 Sınav Hazırlığı">
+          <div>
+            <div class="card-title">A1 Sınav Hazırlığı</div>
+            <div class="card-sub">A1 sınav hazırlığı materyali.</div>
+          </div>
+          <div class="open-row"><span class="badge">Kısayol</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/file/d/1aRkzLipU1fu7YFzFDalX4L4C7bnKdERq/view?usp=drivesdk" data-title="A2 Sınav Alıştırma">
+          <div>
+            <div class="card-title">A2 Sınav Alıştırma</div>
+            <div class="card-sub">A2 sınav alıştırma materyali.</div>
+          </div>
+          <div class="open-row"><span class="badge">Kısayol</span><span class="open-text">Aç →</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- KITAPLAR -->
+    <section class="section" id="kitaplar">
+      <div class="section-head">
+        <h2>Tüm Seviye Ders Kitapları</h2>
+        <small>Genel kitap ve seri klasörleri</small>
+      </div>
+
+      <div class="grid">
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/17jZLiBdgTxooNI5KutxFJgOhkA_XlCLV" data-title="Tüm Seviye Ders Kitapları">
+          <div>
+            <div class="card-title">TÜM SEVİYE DERS KİTAPLARI</div>
+            <div class="card-sub">A1, A2, B1, B2 ve diğer kitap materyalleri.</div>
+          </div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1_Vb_LOaPZZiiOqwJLRwNoB39falQUNOf" data-title="A1 Kurs Başı">
+          <div>
+            <div class="card-title">A1 Kurs Başı</div>
+            <div class="card-sub">A1 başlangıç ve kurs açılış materyalleri.</div>
+          </div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- A1 -->
+    <section class="section" id="a1">
+      <div class="section-head">
+        <h2>A1 Materyalleri</h2>
+        <small>Menschen A1, PDF, testtrainer ve videolar</small>
+      </div>
+
+      <div class="grid">
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1EhcIIju4RZyB5HfcccAF6q8nHIou2uwT" data-title="A1">
+          <div><div class="card-title">A1</div><div class="card-sub">A1 ana klasörü.</div></div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1hNxBPJsk0vszbqwS7Zn6zuFf4KxNEYuT" data-title="A1 A1">
+          <div><div class="card-title">A1 / A1</div><div class="card-sub">A1 iç klasör materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1TvFJk-yKOMhz4-Bq9OQ4GCHMPhuLqv17" data-title="Menschen A1.1 PDF">
+          <div><div class="card-title">1.Menschen A1.1 PDF</div><div class="card-sub">A1.1 kitap PDF materyali.</div></div>
+          <div class="open-row"><span class="badge">PDF</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1OOC9YeJ33nRbJs4icrqD3j8GaAQnAEfu" data-title="Menschen A1.2 PDF">
+          <div><div class="card-title">2.Menschen A1.2 PDF</div><div class="card-sub">A1.2 kitap PDF materyali.</div></div>
+          <div class="open-row"><span class="badge">PDF</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1-g_MsFSAiHeLxSDwTU5IkbuowEMN6eXc" data-title="Menschen A1 Testtrainer">
+          <div><div class="card-title">4.Menschen A1 Testtrainer</div><div class="card-sub">A1 testtrainer alıştırmaları.</div></div>
+          <div class="open-row"><span class="badge">Test</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1nJdAaZNtqEbpknd0EEdXFd4IDsm_oRR5" data-title="Videos A1">
+          <div><div class="card-title">8.Videos — A1 içinde</div><div class="card-sub">A1 video materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Video</span><span class="open-text">Aç →</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- A2 -->
+    <section class="section" id="a2">
+      <div class="section-head">
+        <h2>A2 Materyalleri</h2>
+        <small>Menschen A2, testtrainer ve videolar</small>
+      </div>
+
+      <div class="grid">
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1yHVZn0fu2s8kG1f_2uelqnpbQfsN6r3L" data-title="A2">
+          <div><div class="card-title">A2</div><div class="card-sub">A2 ana klasörü.</div></div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1LQRrB2gAFQ7MGEWvdYzSw1UKt9VcKuyY" data-title="Menschen A2.1">
+          <div><div class="card-title">1.Menschen A2.1</div><div class="card-sub">A2.1 kitap ve ders materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Kitap</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1rB6_Fo-MppXvGNTDknabdkRVYGhdxznK" data-title="Menschen A2.2">
+          <div><div class="card-title">2.Menschen A2.2</div><div class="card-sub">A2.2 kitap ve ders materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Kitap</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1JeiL8jVufuDPVJS53DK7RSKpkN3u1abK" data-title="Menschen A2 Testtrainer">
+          <div><div class="card-title">4.Menschen A2 Testtrainer</div><div class="card-sub">A2 testtrainer alıştırmaları.</div></div>
+          <div class="open-row"><span class="badge">Test</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1LlOCyTPtjgz40XJI_8dnbs0YYXxtyU9S" data-title="Videos A2">
+          <div><div class="card-title">6.Videos — A2 içinde</div><div class="card-sub">A2 video materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Video</span><span class="open-text">Aç →</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- B1 -->
+    <section class="section" id="b1">
+      <div class="section-head">
+        <h2>B1 Materyalleri</h2>
+        <small>Menschen B1, TELC B1 ve testtrainer</small>
+      </div>
+
+      <div class="grid">
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1JL1S16JrJ6ZLpL2AyN7cWKUW_zCYsjpd" data-title="TELC B1">
+          <div><div class="card-title">TELC B1</div><div class="card-sub">TELC B1 sınav hazırlığı materyalleri.</div></div>
+          <div class="open-row"><span class="badge">TELC</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1-4HicuJ5pDdyZim4mT_2ougN2v-vEwPD" data-title="B1">
+          <div><div class="card-title">B1</div><div class="card-sub">B1 ana klasörü.</div></div>
+          <div class="open-row"><span class="badge">Drive</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1SJc0Y5IM0a-blfHqkvjKj9Ae7Tgsi0qz" data-title="Menschen B1.1">
+          <div><div class="card-title">1.Menschen B1.1</div><div class="card-sub">B1.1 kitap ve ders materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Kitap</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/14JLPjC9_cctPe5jDRL18mrpc8xCed9mi" data-title="Menschen B1.2">
+          <div><div class="card-title">2.Menschen B1.2</div><div class="card-sub">B1.2 kitap ve ders materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Kitap</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1n2Vxp_8QK6T99_hiYyvy4rtNR-LTWvWZ" data-title="Menschen B1 Testtrainer">
+          <div><div class="card-title">4.Menschen B1 Testtrainer</div><div class="card-sub">B1 testtrainer alıştırmaları.</div></div>
+          <div class="open-row"><span class="badge">Test</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1K3NJ7NThAA8YxFNcYYsHX0wGpFUIvbMJ" data-title="Videos B1">
+          <div><div class="card-title">6.Videos — B1 içinde</div><div class="card-sub">B1 video materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Video</span><span class="open-text">Aç →</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- B2 -->
+    <section class="section" id="b2">
+      <div class="section-head">
+        <h2>B2 Materyalleri</h2>
+        <small>TELC B2, Sicher B2, audios ve kitaplar</small>
+      </div>
+
+      <div class="grid">
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1nwBOKfm6XL5TQZKNpQTonkJ21Qe5oF-w" data-title="TELC B2">
+          <div><div class="card-title">TELC B2</div><div class="card-sub">TELC B2 sınav hazırlığı materyalleri.</div></div>
+          <div class="open-row"><span class="badge">TELC</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1JtQH-Idh-291oACbXXq3k-aq2mnc69gI" data-title="TELC B2 Audio">
+          <div><div class="card-title">TELC B2-AUDIO</div><div class="card-sub">TELC B2 ses dosyaları.</div></div>
+          <div class="open-row"><span class="badge">Audio</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1PXct112F94quj3cfAAtN7NG1skFopzpl" data-title="B2 Sicher">
+          <div><div class="card-title">B2 Sicher!</div><div class="card-sub">Sicher B2 genel materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Kitap</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1qKlatNpaCCqBc9kon4z06kMqjDd8HLnw" data-title="Sicher aktuell B2.1 Kursbuch Arbeitsbuch">
+          <div><div class="card-title">1.Sicher! aktuell B2.1 Kurs- und Arbeitsbuch</div><div class="card-sub">B2.1 kurs ve çalışma kitabı.</div></div>
+          <div class="open-row"><span class="badge">Kitap</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1MF8K6z2VRcig79anmO70eglE27mdU248" data-title="B2.1 Kursbuch Audios">
+          <div><div class="card-title">B2.1 / 1.Kursbuch Audios</div><div class="card-sub">B2.1 Kursbuch ses dosyaları.</div></div>
+          <div class="open-row"><span class="badge">Audio</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1VZXdSCo4UQmIcdbUwHUJayj0my7zhYTv" data-title="B2.1 Arbeitsbuch Audios">
+          <div><div class="card-title">B2.1 / 2.Arbeitsbuch Audios</div><div class="card-sub">B2.1 Arbeitsbuch ses dosyaları.</div></div>
+          <div class="open-row"><span class="badge">Audio</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1Z9xwOqFNy_wKA3TvnKwv9TM0FCy4-iu_" data-title="Sicher aktuell B2.2 Kursbuch Arbeitsbuch">
+          <div><div class="card-title">2.Sicher! aktuell B2.2 Kurs- und Arbeitsbuch</div><div class="card-sub">B2.2 kurs ve çalışma kitabı.</div></div>
+          <div class="open-row"><span class="badge">Kitap</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1467uZ8yWMEsIvaV9U7L3ZKdNLQ4Vbryj" data-title="B2.2 Kursbuch Audios">
+          <div><div class="card-title">B2.2 / 1.Kursbuch Audios</div><div class="card-sub">B2.2 Kursbuch ses dosyaları.</div></div>
+          <div class="open-row"><span class="badge">Audio</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1s7FT0ifqxyXX_d26dK_jNWnyxrAQztsF" data-title="B2.2 Arbeitsbuch Audios">
+          <div><div class="card-title">B2.2 / 2.Arbeitsbuch Audios</div><div class="card-sub">B2.2 Arbeitsbuch ses dosyaları.</div></div>
+          <div class="open-row"><span class="badge">Audio</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1IUBiaFrLiqfPrQlPRXba3NT6rhOel6Ks" data-title="Einfach gut B1 2">
+          <div><div class="card-title">Einfach_gut! B1_2</div><div class="card-sub">B1/B2 geçiş ve destek materyali.</div></div>
+          <div class="open-row"><span class="badge">Kitap</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1U4NLrRW9u6Dl3qNDuTR98M8U3Ts2yM2l" data-title="Einfach gut B1.1">
+          <div><div class="card-title">Einfach gut! B1.1</div><div class="card-sub">Einfach gut B1.1 materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Kitap</span><span class="open-text">Aç →</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- C1 / JUNIOR -->
+    <section class="section" id="c1">
+      <div class="section-head">
+        <h2>C1 / Junior Materyalleri</h2>
+        <small>Telc Junior ve C1 TELC klasörleri</small>
+      </div>
+
+      <div class="grid">
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1XgR2-Xwq4iYP47-Afpuv_8Ss1ZhMo88n" data-title="Telc Junior">
+          <div><div class="card-title">Telc Junior</div><div class="card-sub">Junior sınav materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Junior</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1a_hJwE7Aj-WuuYpNVzc6dAeX27HK7qCi" data-title="Telc Junior A1">
+          <div><div class="card-title">Telc Junior / A1</div><div class="card-sub">Junior A1 materyalleri.</div></div>
+          <div class="open-row"><span class="badge">A1</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1yQPWgrjrhJO6COhpvAXjEOIS84tMi_h_" data-title="C1 Telc">
+          <div><div class="card-title">C1 Telc</div><div class="card-sub">C1 TELC ana klasörü.</div></div>
+          <div class="open-row"><span class="badge">C1</span><span class="open-text">Aç →</span></div>
+        </a>
+
+        <a class="link-card" target="_blank" href="https://drive.google.com/drive/folders/1qeLLKIDNRB6AUS-wUaizYuPFi58wEY7K" data-title="C1 Telc C1 Çıkmışlar">
+          <div><div class="card-title">C1 Telc / C1 Çıkmışlar</div><div class="card-sub">C1 çıkmış sınav materyalleri.</div></div>
+          <div class="open-row"><span class="badge">Çıkmışlar</span><span class="open-text">Aç →</span></div>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <strong>AYDA Öğretmenler Materyal Paneli</strong><br />
+      Bu sayfa öğretmenlerin Drive materyallerine hızlı ve düzenli erişmesi için hazırlanmıştır.
+    </footer>
+  </main>
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const cards = Array.from(document.querySelectorAll(".link-card"));
+    const sections = Array.from(document.querySelectorAll(".section"));
+    const emptyMessage = document.getElementById("emptyMessage");
+
+    searchInput.addEventListener("input", function () {
+      const query = this.value.trim().toLocaleLowerCase("tr-TR");
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const text = card.innerText.toLocaleLowerCase("tr-TR");
+        const dataTitle = (card.dataset.title || "").toLocaleLowerCase("tr-TR");
+        const isMatch = text.includes(query) || dataTitle.includes(query);
+
+        card.style.display = isMatch ? "flex" : "none";
+
+        if (isMatch) visibleCount++;
+      });
+
+      sections.forEach(section => {
+        const visibleCards = section.querySelectorAll('.link-card[style*="display: flex"], .link-card:not([style*="display: none"])');
+        let hasVisible = false;
+
+        section.querySelectorAll(".link-card").forEach(card => {
+          if (card.style.display !== "none") hasVisible = true;
+        });
+
+        section.style.display = hasVisible ? "block" : "none";
+      });
+
+      emptyMessage.style.display = visibleCount === 0 ? "block" : "none";
+
+      if (query === "") {
+        sections.forEach(section => section.style.display = "block");
+        cards.forEach(card => card.style.display = "flex");
+        emptyMessage.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
