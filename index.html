@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AYDA Öğretmenler Materyal Paneli</title>
-  <meta name="theme-color" content="#234078" />
+  <meta name="theme-color" content="#122850" />
 
   <style>
     :root {
@@ -685,6 +685,57 @@ html{scroll-behavior:smooth}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
+
+/* AYDA B1-inspired teacher resources vNext */
+:root{--ayda:#122850;--ayda-dark:#0c1d3c;--ayda-ink:#14213d;--bg:#f8f7f2;--card:#fff;--text:#14213d;--muted:#60708d;--border:#dde5f0;--soft:#eef2f7;--shadow:0 12px 36px #12285019;--shadow-soft:0 8px 21px #1228500c}
+body{background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+.hero{min-height:0;background:linear-gradient(135deg,#122850,#244269);border-radius:21px;padding:23px 27px}
+.hero h1{font-weight:900;letter-spacing:-.04em}
+.hero-grid{grid-template-columns:1fr}
+.menu{background:#f8f7f2f5;border:1px solid #dde5f0;box-shadow:0 6px 16px #12285012;border-radius:15px}
+.menu a{border-radius:11px}
+.top-panel{grid-template-columns:minmax(0,1.25fr) minmax(230px,.75fr);gap:12px}
+.search-card,.notice-card{border-color:#e2e8ef;box-shadow:0 6px 18px #1228500a;border-radius:16px}
+.teacher-smart-filters{display:flex;gap:7px;overflow-x:auto;scrollbar-width:thin;padding:10px 0 2px}
+.teacher-filter{white-space:nowrap;min-height:38px;border:1px solid #dde5f0;border-radius:999px;background:#f4f6f9;color:#2c3f62;cursor:pointer;font:750 12px/1.2 inherit;padding:8px 12px}
+.teacher-filter[aria-pressed=true]{background:#122850;border-color:#122850;color:white}
+.search-helpers{margin-top:10px}
+.teacher-tile{display:flex;flex-direction:column;min-width:0;min-height:0;background:#fff;border:1px solid #dde5f0;border-radius:15px;overflow:hidden;box-shadow:0 6px 19px #1228500c}
+.teacher-tile[hidden],.section[hidden]{display:none!important}
+.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.teacher-tile .link-card{flex:1;border:0!important;border-radius:0!important;box-shadow:none!important;min-height:99px;padding:13px}
+.teacher-tile .link-card:hover{transform:none;box-shadow:none}
+.teacher-tile-actions{display:grid;grid-template-columns:1fr auto;border-top:1px solid #e3e8ee;background:#f6f8fb}
+.teacher-tile-actions button{min-height:42px;padding:9px 11px;border:0;cursor:pointer;font:750 11.5px/1.25 inherit;color:#122850;background:transparent}
+.teacher-tile-actions button:first-child{border-right:1px solid #e3e8ee}
+.teacher-tile-actions button:hover{background:#fff0c7}
+.teacher-star[aria-pressed=true]{color:#ae6d00}
+.section{scroll-margin-top:76px}
+.teacher-favorites{background:#fffdf6;border:1px solid #e7d6a1;border-radius:16px;margin:12px 0;padding:13px 15px}
+.teacher-favorites[hidden]{display:none}
+.teacher-favorites-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:11px}
+.teacher-favorites-head strong{font-size:14px;color:#122850}
+.teacher-favorites-head span{font-size:11px;color:#62718b}
+.teacher-favorites-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.teacher-favorite-row{display:flex;align-items:center;gap:6px;min-width:0;background:#fff;border:1px solid #e4e8ed;padding:8px;border-radius:10px}
+.teacher-favorite-row span{flex:1;min-width:0;overflow-wrap:anywhere;font-size:11.5px;font-weight:800}
+.teacher-favorite-row button,.teacher-favorite-row a{flex:none;background:#122850;color:#fff;border:0;border-radius:8px;padding:8px 9px;min-height:35px;cursor:pointer;font:750 11px/1.3 inherit}
+.teacher-favorite-row a{background:#eff3f8;color:#122850}
+.teacher-toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));transform:translate(-50%,12px);opacity:0;pointer-events:none;background:#122850;color:#fff;z-index:1001;border-radius:12px;max-width:calc(100vw - 26px);text-align:center;padding:12px 17px;font-size:13px;font-weight:800;box-shadow:0 12px 30px #12285044;transition:opacity .2s,transform .2s}
+.teacher-toast.visible{opacity:1;transform:translate(-50%,0)}
+:focus-visible{outline:3px solid #ffcf4a;outline-offset:3px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.teacher-favorites-list{grid-template-columns:1fr}}
+@media(max-width:640px){
+ .hero{padding:18px;border-radius:17px}
+ .top-panel{grid-template-columns:1fr}
+ .grid{grid-template-columns:1fr;gap:9px}
+ .teacher-tile .link-card{min-height:82px;padding:12px}
+ .teacher-tile-actions button{min-height:45px}
+ .menu{top:0}
+ .teacher-smart-filters{gap:6px}
+ .teacher-filter{min-height:41px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.teacher-toast{transition:none}}
 </style>
 </head>
 
@@ -754,6 +805,13 @@ html{scroll-behavior:smooth}
             placeholder="Kitap, ses dosyası veya seviye ara…"
           />
         </div>
+        <div class="teacher-smart-filters" role="group" aria-label="Hızlı arama">
+<button type="button" class="teacher-filter" data-query="telc">telc</button>
+<button type="button" class="teacher-filter" data-query="menschen">Menschen</button>
+<button type="button" class="teacher-filter" data-query="audio">Ses / Audio</button>
+<button type="button" class="teacher-filter" data-query="kursbuch">Kursbuch</button>
+<button type="button" class="teacher-filter" data-query="testtrainer">Testtrainer</button>
+</div>
         <div class="search-helpers"><span id="searchResultSummary" role="status" aria-live="polite">Tüm materyaller listeleniyor.</span><button id="clearSearchBtn" type="button" hidden>Temizle ×</button></div>
       </div>
 
@@ -773,6 +831,10 @@ html{scroll-behavior:smooth}
 
     
 
+    <section class="teacher-favorites" id="teacherFavorites" hidden aria-label="Favori materyaller">
+<div class="teacher-favorites-head"><strong>★ Favori Materyallerim</strong><span>Bu cihazda saklanır</span></div>
+<div class="teacher-favorites-list" id="teacherFavoritesList"></div>
+</section>
     <div id="emptyMessage" class="empty">
       Aramanızla eşleşen materyal bulunamadı.
     </div>
@@ -1112,52 +1174,81 @@ html{scroll-behavior:smooth}
   </main>
 
   <script>
-    const searchInput = document.getElementById("searchInput");
-    const cards = Array.from(document.querySelectorAll(".link-card"));
-    const sections = Array.from(document.querySelectorAll(".section"));
-    const emptyMessage = document.getElementById("emptyMessage");
-    const searchSummary = document.getElementById("searchResultSummary");
-    const clearButton = document.getElementById("clearSearchBtn");
-
-    searchInput.addEventListener("input", function () {
-      const query = this.value.trim().toLocaleLowerCase("tr-TR");
-      let visibleCount = 0;
-
-      cards.forEach(card => {
-        const text = card.innerText.toLocaleLowerCase("tr-TR");
-        const dataTitle = (card.dataset.title || "").toLocaleLowerCase("tr-TR");
-        const isMatch = text.includes(query) || dataTitle.includes(query);
-
-        card.style.display = isMatch ? "flex" : "none";
-
-        if (isMatch) visibleCount++;
-      });
-
-      sections.forEach(section => {
-        let hasVisible = false;
-
-        section.querySelectorAll(".link-card").forEach(card => {
-          if (card.style.display !== "none") hasVisible = true;
-        });
-
-        section.style.display = hasVisible ? "block" : "none";
-      });
-
-      emptyMessage.style.display = visibleCount === 0 ? "block" : "none";
-      if (searchSummary) searchSummary.textContent = query ? visibleCount + " materyal bulundu." : "Tüm materyaller listeleniyor.";
-      if (clearButton) clearButton.hidden = !query;
-
-      if (query === "") {
-        sections.forEach(section => section.style.display = "block");
-        cards.forEach(card => card.style.display = "flex");
-        emptyMessage.style.display = "none";
-      }
-    });
-    if (clearButton) clearButton.addEventListener("click", function () {
-      searchInput.value = "";
-      searchInput.dispatchEvent(new Event("input", {bubbles:true}));
-      searchInput.focus();
-    });
-  </script>
+(function(){
+const input=document.getElementById("searchInput");
+const cards=Array.from(document.querySelectorAll(".link-card"));
+const sections=Array.from(document.querySelectorAll(".section"));
+const empty=document.getElementById("emptyMessage");
+const status=document.getElementById("searchResultSummary");
+const clear=document.getElementById("clearSearchBtn");
+const fast=Array.from(document.querySelectorAll(".teacher-filter"));
+const favoritesSection=document.getElementById("teacherFavorites");
+const favoritesList=document.getElementById("teacherFavoritesList");
+const storageKey="ayda_teacher_favorites_v2";
+let saved=[];
+try{const value=JSON.parse(localStorage.getItem(storageKey)||"[]");if(Array.isArray(value))saved=value.filter(x=>typeof x==="string");}catch(e){}
+const favorites=new Set(saved);
+const library=new Map();
+const toast=document.createElement("div");
+toast.className="teacher-toast";toast.setAttribute("role","status");toast.setAttribute("aria-live","polite");document.body.appendChild(toast);
+let toastTimer;
+function notify(msg){toast.textContent=msg;toast.classList.add("visible");clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove("visible"),1800);}
+async function copy(url){
+ let ok=false;
+ if(navigator.clipboard&&window.isSecureContext){try{await navigator.clipboard.writeText(url);ok=true;}catch(e){}}
+ if(!ok){const el=document.createElement("textarea");el.value=url;el.style.cssText="position:fixed;left:-9999px";document.body.appendChild(el);el.select();try{ok=document.execCommand("copy");}catch(e){}el.remove();}
+ notify(ok?"Materyal bağlantısı kopyalandı":"Kopyalama yapılamadı; dosyayı açıp linkini alabilirsiniz.");
+}
+function persist(){try{localStorage.setItem(storageKey,JSON.stringify(Array.from(favorites)));}catch(e){}}
+function renderFavorites(){
+ favoritesList.replaceChildren();
+ favorites.forEach(url=>{
+  const source=library.get(url);if(!source)return;
+  const row=document.createElement("div");row.className="teacher-favorite-row";
+  const name=document.createElement("span");name.textContent=source.title;
+  const cp=document.createElement("button");cp.type="button";cp.textContent="Kopyala";cp.addEventListener("click",()=>copy(url));
+  const open=document.createElement("a");open.href=url;open.target="_blank";open.rel="noopener noreferrer";open.textContent="Aç ↗";
+  row.append(name,cp,open);favoritesList.appendChild(row);
+ });
+ favoritesSection.hidden=!favoritesList.childElementCount;
+ document.querySelectorAll(".teacher-star").forEach(btn=>{
+  const active=favorites.has(btn.dataset.url);
+  btn.setAttribute("aria-pressed",String(active));
+  btn.textContent=active?"★ Favorilerden Çıkar":"☆ Favoriye Ekle";
+ });
+}
+cards.forEach(card=>{
+ const url=card.href,title=(card.dataset.title||card.querySelector(".card-title")?.textContent||"Materyal").trim();
+ library.set(url,{url,title});
+ card.rel="noopener noreferrer";
+ const parent=card.parentElement;
+ const tile=document.createElement("div");tile.className="teacher-tile";
+ parent.insertBefore(tile,card);tile.appendChild(card);
+ const tools=document.createElement("div");tools.className="teacher-tile-actions";
+ const cp=document.createElement("button");cp.type="button";cp.className="teacher-copy";cp.textContent="⧉ Linki Kopyala";cp.setAttribute("aria-label",title+" bağlantısını kopyala");cp.addEventListener("click",()=>copy(url));
+ const star=document.createElement("button");star.type="button";star.className="teacher-star";star.dataset.url=url;star.addEventListener("click",()=>{if(favorites.has(url))favorites.delete(url);else favorites.add(url);persist();renderFavorites();});
+ tools.append(cp,star);tile.appendChild(tools);
+});
+renderFavorites();
+function update(){
+ const q=input.value.trim().toLocaleLowerCase("tr-TR");let visible=0;
+ cards.forEach(card=>{
+  const tile=card.closest(".teacher-tile");
+  const searchable=(card.textContent+" "+(card.dataset.title||"")+" "+card.closest(".section")?.querySelector("h2")?.textContent).toLocaleLowerCase("tr-TR");
+  const match=!q||searchable.includes(q);
+  tile.hidden=!match;if(match)visible++;
+ });
+ sections.forEach(section=>section.hidden=!section.querySelector(".teacher-tile:not([hidden])"));
+ empty.style.display=q&&visible===0?"block":"none";
+ status.textContent=q?visible+" dosya veya klasör bulundu.":cards.length+" dosya ve klasör listeleniyor.";
+ clear.hidden=!q;
+ fast.forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.query===q)));
+}
+input.addEventListener("input",update);
+clear.addEventListener("click",()=>{input.value="";update();input.focus();});
+fast.forEach(btn=>btn.addEventListener("click",()=>{input.value=(input.value.trim().toLocaleLowerCase("tr-TR")===btn.dataset.query?"":btn.dataset.query);update();input.focus();}));
+update();
+})();
+</script>
 </body>
 </html>
